@@ -221,17 +221,16 @@ void task_IR_array (void* p_params)
 }//end task: task_IR_array
 
 /** @brief   Task which gets turns CleanBot on or off from Wifi Reciever
- *  @details 
- *           
- *           Example code demonstrates how to run a task on an approximate        //taken from ridgley lab
- *           schedule using @c vTaskDelay().  If we need to run a task on a
- *           more accurate schedule that doesn't accumulate delays, we should
- *           use @c vTaskDelayUntil() to do the scheduling.
+ *  @details This task uses the ESP8266 WiFi module to determine if it is safe
+ *           for the CleanBot to be running. If a WiFi signal is detected, then
+ *           a value of TRUE is assigned to the wifi_to_motor_share so that the
+ *           CleanBot will run. Otherwise, a value of FALSE is assigned.
+ * 
  *  @param   p_params A pointer to function parameters which we don't use.
  */
-void task_wifi_reciever (void)
+void task_wifi_reciever (void* p_params)
 {
-
+    (void) p_params;
     for (;;)
     {
         // call wifi reciever function and put result into share
@@ -248,17 +247,15 @@ void task_wifi_reciever (void)
 }
 
 /** @brief   turns LED on or off depending on the signal from the wifi reciever
- *  @details 
+ *  @details This task turns on or off a digital pin assigned to the UV light 
+ *           control. For this prototype, LEDs will be used in place of UV lights
+ *           as a more suitable replacement.
  *           
- *           Example code demonstrates how to run a task on an approximate        //taken from ridgley lab
- *           schedule using @c vTaskDelay().  If we need to run a task on a
- *           more accurate schedule that doesn't accumulate delays, we should
- *           use @c vTaskDelayUntil() to do the scheduling.
  *  @param   p_params A pointer to function parameters which we don't use.
  */
-void led_task (void)
+void led_task (void* p_params)
 {
-
+    (void) p_params;
     for (;;)
     {
         // put boolean share into a variable
@@ -269,19 +266,18 @@ void led_task (void)
     }
 }
 
-/** @brief   reads the encoders position and puts it into queue to be sent to
+/** @brief   Reads the encoders position and puts it into queue to be sent to
  *           the motor driver task
- *  @details 
+ *  @details This task reads the magnetic encoders and determines their rate of
+ *           rotation or angular velocity. The values are then put into queues 
+ *           to be read by the drivetrain task which is then used for closed loop
+ *           feedback control to hold steady motor speeds.
  *           
- *           Example code demonstrates how to run a task on an approximate        //taken from ridgley lab
- *           schedule using @c vTaskDelay().  If we need to run a task on a
- *           more accurate schedule that doesn't accumulate delays, we should
- *           use @c vTaskDelayUntil() to do the scheduling.
  *  @param   p_params A pointer to function parameters which we don't use.
  */
-void encoder_task (void)
+void encoder_task (void* p_params)
 {
-
+    (void) p_params;
     for (;;)
     {
         // read encoder from left motor
